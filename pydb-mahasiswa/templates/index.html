@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Mahasiswa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+    <h1>Data Mahasiswa</h1>
+
+    <form method="GET" action="/" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="keyword" class="form-control" placeholder="Cari nama...">
+            <button type="submit" class="btn btn-primary">Cari</button>
+        </div>
+    </form>
+
+    <a href="/tambah" class="btn btn-success mb-3">Tambah Mahasiswa</a>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>NIM</th>
+                <th>Jurusan</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mhs in mahasiswa %}
+            <tr>
+                <td>{{ mhs.nama }}</td>
+                <td>{{ mhs.nim }}</td>
+                <td>{{ mhs.jurusan }}</td>
+                <td>
+                    <a href="/edit/{{ mhs.id }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="/hapus/{{ mhs.id }}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
