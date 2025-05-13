@@ -9,6 +9,6 @@ Folder ini berisi website sederhana penggunaan Bahasa Pemrograman Python dengan 
    git clone https://github.com/username/nama-repo.git
 
 ## Support me
-Instagram : @cliarym
-Youtube   : @yakstr25
-Gmail     : github.yak@gmail.com
+- Instagram : @cliarym
+- Youtube   : @yakstr25
+- Gmail     : github.yak@gmail.com
