@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Form SPRI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-light">
+    <div class="container py-4">
+        <h3 class="text-center mb-4">CETAK SURAT PERSETUJUAN RAWAT INAP</h3>
+        
+        <form method="POST" action="/submit" class="border p-4 bg-white shadow rounded">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h5>ENTRY SPRI</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Nomor SPRI</label>
+                        <input type="text" class="form-control" value="Auto" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tanggal SPRI</label>
+                        <input type="text" class="form-control" value="Sysdate" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nama Penanggung Jawab</label>
+                        <input type="text" class="form-control" name="nama_penanggung_jawab" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Alamat Penanggung Jawab</label>
+                        <input type="text" class="form-control" name="alamat_penanggung_jawab">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telpon Penanggung Jawab</label>
+                        <input type="text" class="form-control" name="telpon_penanggung_jawab">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Pekerjaan Penanggung Jawab</label>
+                        <input type="text" class="form-control" name="pekerjaan_penanggung_jawab">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Hubungan dengan Pasien</label>
+                        <input type="text" class="form-control" name="hubungan_dengan_pasien">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h5>BUKU REGISTRASI</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Nomor Registrasi</label>
+                        <select name="nomor_registrasi" id="nomor_registrasi" class="form-select">
+                            <option value="" selected disabled>Pilih</option>
+                            {% for pasien in pasien_list %}
+                            <option value="{{ pasien.nomor_registrasi }}">{{ pasien.nomor_registrasi }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nama Pasien</label>
+                        <input type="text" id="nama_pasien" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Alamat</label>
+                        <input type="text" id="alamat_pasien" class="form-control" readonly>
+                    </div>
+
+                    <h5 class="mt-4">DOKTER</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Kode Dokter</label>
+                        <select name="kode_dokter" id="kode_dokter" class="form-select">
+                            <option value="" selected disabled>Pilih</option>
+                            {% for dokter in dokter_list %}
+                            <option value="{{ dokter.kode_dokter }}">{{ dokter.kode_dokter }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nama Dokter</label>
+                        <input type="text" id="nama_dokter" class="form-control" readonly>
+                    </div>
+
+                    <h5 class="mt-4">KAMAR</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Kode Kamar</label>
+                        <select name="kode_kamar" id="kode_kamar" class="form-select">
+                            <option value="" selected disabled>Pilih</option>
+                            {% for kamar in kamar_list %}
+                            <option value="{{ kamar.kode_kamar }}">{{ kamar.kode_kamar }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Jenis Kamar</label>
+                        <input type="text" id="jenis_kamar" class="form-control" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+                <button type="submit" class="btn btn-primary">Cetak</button>
+                <button type="reset" class="btn btn-warning">Batal</button>
+                <a href="/" class="btn btn-secondary">Keluar</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $('#nomor_registrasi').change(function () {
+            $.get('/get_pasien/' + $(this).val(), function (data) {
+                $('#nama_pasien').val(data.nama);
+                $('#alamat_pasien').val(data.alamat);
+            });
+        });
+
+        $('#kode_dokter').change(function () {
+            $.get('/get_dokter/' + $(this).val(), function (data) {
+                $('#nama_dokter').val(data.nama_dokter);
+            });
+        });
+
+        $('#kode_kamar').change(function () {
+            $.get('/get_kamar/' + $(this).val(), function (data) {
+                $('#jenis_kamar').val(data.jenis_kamar);
+            });
+        });
+    </script>
+</body>
+</html>
